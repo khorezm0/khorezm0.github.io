@@ -29,9 +29,9 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/WebBuild.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WebBuild.data.unityweb",
-        frameworkUrl: buildUrl + "/WebBuild.framework.js.unityweb",
-        codeUrl: buildUrl + "/WebBuild.wasm.unityweb",
+        dataUrl: buildUrl + "/WebBuild.data.unityweb?time="+new Date().getTime(),
+        frameworkUrl: buildUrl + "/WebBuild.framework.js.unityweb?time="+new Date().getTime(),
+        codeUrl: buildUrl + "/WebBuild.wasm.unityweb?time="+new Date().getTime(),
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Webgl_proj",
