@@ -28,10 +28,11 @@
     <script>
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/WebBuild.loader.js";
+      var __timeKey = parseInt(new Date().getTime() / 3600000);
       var config = {
-        dataUrl: buildUrl + "/WebBuild.data.unityweb?time="+new Date().getTime(),
-        frameworkUrl: buildUrl + "/WebBuild.framework.js.unityweb?time="+new Date().getTime(),
-        codeUrl: buildUrl + "/WebBuild.wasm.unityweb?time="+new Date().getTime(),
+        dataUrl: buildUrl + "/WebBuild.data.unityweb?time="+__timeKey,
+        frameworkUrl: buildUrl + "/WebBuild.framework.js.unityweb?time="+__timeKey,
+        codeUrl: buildUrl + "/WebBuild.wasm.unityweb?time="+__timeKey,
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Webgl_proj",
