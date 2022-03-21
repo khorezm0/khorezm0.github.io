@@ -36,7 +36,7 @@
 	let textarea = document.querySelector("textarea#logg");
 	Object.defineProperty(console, "warn", {
 	  value: (...args)=>{
-		textarea.innerText += "\n" + args[0];
+		textarea.value += "\n" + args[0];
 		return origWarn.call(origWarn, ...args);
 	  }  
 	});
