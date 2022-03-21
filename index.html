@@ -24,8 +24,23 @@
         <div id="unity-fullscreen-button"></div>
         <div id="unity-build-title">Webgl_proj</div>
       </div>
+      <div>
+		<br/>
+		<br/>
+		<br/>
+		<textarea id="logg"></textarea>
+      </div>
     </div>
     <script>
+	let origWarn = console.warn;
+	let textarea = document.querySelector("textarea#logg");
+	Object.defineProperty(console, "warn", {
+	  value: (...args)=>{
+		textarea.innerText += "\n" + args[0];
+		return origWarn.call(origWarn, ...args);
+	  }  
+	});
+    
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/WebBuild.loader.js";
       var __timeKey = parseInt(new Date().getTime() / 3600000);
