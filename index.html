@@ -15,6 +15,14 @@
 			 object-fit: cover;
 			 background-color: white;
          }
+         .unity-preloader-video-blocker {
+         	 position: absolute;
+			 left:0;
+			 top:0;
+			 right:0;
+			 bottom:0;
+			 background-color: rgba(0,0,0,0);
+         }
       </style>
    </head>
    <body>
@@ -39,6 +47,7 @@
             <textarea id="logg"></textarea>
          </div>
          <video width=1 height=1 class="unity-preloader-video" src="media/logo.mp4"></video>
+         <div class="unity-preloader-video-blocker"></div>
       </div>
       <script>
 		const _width = 960;
@@ -59,7 +68,10 @@
 		videoPreloader
 			.addEventListener("ended", (ev) => {
 				videoPreloader.style.opacity = "0";
-				setTimeout(() => videoPreloader.style.display = "none", 1000);
+				setTimeout(() => {
+				 videoPreloader.style.display = "none";
+				 document.querySelector(".unity-preloader-video-blocker").style.display = "none";
+				}, 1000);
 			});
 		videoPreloader.muted = true;
 		videoPreloader.play();
