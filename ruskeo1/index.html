@@ -25,7 +25,7 @@
       }
     </style>
   </head>
-  <body style="text-align: center">
+  <body>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=1 height=1></canvas>
       <div id="unity-loading-bar">
@@ -85,9 +85,9 @@
       var loaderUrl = buildUrl + "/Build.loader.js";
       var __timeKey = parseInt(new Date().getTime() / 3600000);
       var config = {
-        dataUrl: "Build/Web.data",
-        frameworkUrl: "Build/Web.framework.js",
-        codeUrl: "Build/Web.wasm",
+        dataUrl: "/Web.data",
+        frameworkUrl: "/Web.framework.js",
+        codeUrl: "/Web.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "3D EDITOR",
