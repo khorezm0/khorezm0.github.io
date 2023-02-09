@@ -1154,26 +1154,26 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
- 2174456: function() {
+ 2175272: function() {
   Module["emscripten_get_now_backup"] = performance.now;
  },
- 2174511: function($0) {
+ 2175327: function($0) {
   performance.now = function() {
    return $0;
   };
  },
- 2174559: function($0) {
+ 2175375: function($0) {
   performance.now = function() {
    return $0;
   };
  },
- 2174607: function() {
+ 2175423: function() {
   performance.now = Module["emscripten_get_now_backup"];
  },
- 2174662: function() {
+ 2175478: function() {
   return Module.webglContextAttributes.premultipliedAlpha;
  },
- 2174723: function() {
+ 2175539: function() {
   return Module.webglContextAttributes.preserveDrawingBuffer;
  }
 };
@@ -2937,6 +2937,17 @@ function _JS_WebRequest_SetResponseHandler(request, arg, onresponse) {
 
 function _JS_WebRequest_SetTimeout(request, timeout) {
  wr.requestInstances[request].timeout = timeout;
+}
+
+function _SaveTxtFile(file) {
+ var blob = new window.Blob([ file ], {
+  type: "text/plain;charset=utf-8"
+ });
+ var link = window.document.createElement("a");
+ link.href = blobUrl;
+ link.download = "result.txt";
+ link.innerHTML = "Click here to download the file";
+ link.click();
 }
 
 var ExceptionInfoAttrs = {
@@ -13251,6 +13262,7 @@ var asmLibraryArg = {
  "JS_WebRequest_SetRequestHeader": _JS_WebRequest_SetRequestHeader,
  "JS_WebRequest_SetResponseHandler": _JS_WebRequest_SetResponseHandler,
  "JS_WebRequest_SetTimeout": _JS_WebRequest_SetTimeout,
+ "SaveTxtFile": _SaveTxtFile,
  "__cxa_allocate_exception": ___cxa_allocate_exception,
  "__cxa_atexit": ___cxa_atexit,
  "__cxa_begin_catch": ___cxa_begin_catch,
