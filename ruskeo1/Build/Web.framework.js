@@ -2944,7 +2944,7 @@ function _SaveTxtFile(file) {
   type: "text/plain;charset=utf-8"
  });
  var link = window.document.createElement("a");
- link.href = blobUrl;
+ link.href = window.URL.createObjectURL(blob);
  link.download = "result.txt";
  link.innerHTML = "Click here to download the file";
  link.click();
