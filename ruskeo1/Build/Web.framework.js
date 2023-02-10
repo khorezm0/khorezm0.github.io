@@ -2940,8 +2940,8 @@ function _JS_WebRequest_SetTimeout(request, timeout) {
 }
 
 function _SaveTxtFile(file) {
-debugger;
- var blob = new window.Blob([ file ], {
+ debugger;
+ var blob = new window.Blob([ UTF8ToString(file) ], {
   type: "text/plain;charset=utf-8"
  });
  var link = window.document.createElement("a");
