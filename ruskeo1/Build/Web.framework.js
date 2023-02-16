@@ -1154,26 +1154,26 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
- 2175272: function() {
+ 2175960: function() {
   Module["emscripten_get_now_backup"] = performance.now;
  },
- 2175327: function($0) {
+ 2176015: function($0) {
   performance.now = function() {
    return $0;
   };
  },
- 2175375: function($0) {
+ 2176063: function($0) {
   performance.now = function() {
    return $0;
   };
  },
- 2175423: function() {
+ 2176111: function() {
   performance.now = Module["emscripten_get_now_backup"];
  },
- 2175478: function() {
+ 2176166: function() {
   return Module.webglContextAttributes.premultipliedAlpha;
  },
- 2175539: function() {
+ 2176227: function() {
   return Module.webglContextAttributes.preserveDrawingBuffer;
  }
 };
@@ -2940,7 +2940,6 @@ function _JS_WebRequest_SetTimeout(request, timeout) {
 }
 
 function _SaveTxtFile(file) {
- debugger;
  var blob = new window.Blob([ UTF8ToString(file) ], {
   type: "text/plain;charset=utf-8"
  });
