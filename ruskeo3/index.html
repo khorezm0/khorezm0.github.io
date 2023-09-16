@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | 3D EDITOR</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <style>
+      .unity-preloader-video {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.5s;
+        object-fit: cover;
+        background-color: white;
+      }
+      .unity-preloader-video-blocker {
+        position: absolute;
+        left:0;
+        top:0;
+        right:0;
+        bottom:0;
+        background-color: rgba(0,0,0,0);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width=1 height=1></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title"></div>
+      </div>
+      <div style="display:none;">
+        <br/><br/><br/>
+        <textarea id="logg"></textarea>
+      </div>
+      <video width=1 height=1 class="unity-preloader-video" src="media/logo.mp4"></video>
+      <div class="unity-preloader-video-blocker"></div>
+    </div>
+    <script>
+      const _width = 960;
+      const _height = 600;
+      let origWarn = console.warn;
+      let textarea = document.querySelector("textarea#logg");
+      let videoPreloader = document.querySelector(".unity-preloader-video");
+      let unityCanvas = document.querySelector("#unity-canvas");
+      if (textarea) {
+        Object.defineProperty(console, "warn", {
+          value: (...args) => {
+            textarea.value += "\n" + args[0];
+            return origWarn.call(origWarn, ...args);
+          }
+        });
+      }
+  
+      videoPreloader
+              .addEventListener("ended", (ev) => {
+                videoPreloader.style.opacity = "0";
+                canvas.style.opacity = "1";
+                setTimeout(() => {
+                  videoPreloader.style.display = "none";
+                  document.querySelector(".unity-preloader-video-blocker").style.display = "none";
+                }, 1000);
+              });
+      videoPreloader.muted = true;
+      videoPreloader.play();
+      videoPreloader.addEventListener("canplay", () => {
+        if (videoPreloader.paused) videoPreloader.play();
+      });
+  
+      videoPreloader.width = _width;
+      videoPreloader.height = _height;
+      unityCanvas.width = _width;
+      unityCanvas.height = _height;
+  
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Web.loader.js";
+      var __timeKey = parseInt(new Date().getTime() / 3600000);
+      var config = {
+        dataUrl: "Build/Web.data",
+        frameworkUrl: "Build/Web.framework.js",
+        codeUrl: "Build/Web.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "3D EDITOR",
+        productVersion: "0.1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      };
+  
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var mobileWarning = document.querySelector("#unity-mobile-warning");
+  
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+  
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers.
+        config.devicePixelRatio = 1;
+        mobileWarning.style.display = "block";
+        setTimeout(() => {
+          mobileWarning.style.display = "none";
+        }, 5000);
+      } else {
+        if(window.innerWidth && window.innerHeight){
+          let w =(window.innerWidth - 15);
+          let h = (window.innerHeight - 50);
+  
+          canvas.width = w;
+          canvas.height = h;
+          canvas.style.width = w + "px";
+          canvas.style.height = h + "px";
+        } else {
+          canvas.style.width = "960px";
+          canvas.style.height = "600px";
+        }
+      }
+      loadingBar.style.display = "block";
+      canvas.style.opacity = "0";
+  
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>
